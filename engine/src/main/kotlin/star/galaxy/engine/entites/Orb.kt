@@ -17,6 +17,7 @@ data class Orb(@Kilo @Gram private val mass: Double,
 
     init {
         Assert.state(mass > 0.0, "mass: $mass")
+        Assert.state(radian > 0.0, "radian: $radian")
     }
 
     override fun mass() = mass
