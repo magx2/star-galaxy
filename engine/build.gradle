@@ -38,4 +38,7 @@ dependencies {
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
 	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+	// mine
+	compile group: 'javax.vecmath', name: 'vecmath', version: '1.5.2'
 }
