@@ -1,9 +1,9 @@
 package star.galaxy.engine.types
 
-import star.galaxy.engine.metainformations.Mutable
+import javafx.geometry.Pos
+import javax.vecmath.Point2d
 import javax.vecmath.Vector2d
 
 interface WithPosition {
-    @Mutable
-    fun position(): Vector2d
+    fun position(): Point2d
 }

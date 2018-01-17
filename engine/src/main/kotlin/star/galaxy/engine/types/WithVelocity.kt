@@ -1,9 +1,7 @@
 package star.galaxy.engine.types
 
-import star.galaxy.engine.metainformations.Mutable
 import javax.vecmath.Vector2d
 
-public interface WithVelocity {
-    @Mutable
+interface WithVelocity {
     fun velocity(): Vector2d
 }
