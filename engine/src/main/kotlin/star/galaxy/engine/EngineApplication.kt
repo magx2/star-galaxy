@@ -1,11 +1,11 @@
-package star.galaxy.root
+package star.galaxy.engine
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-class RootApplication
+class EngineApplication
 
 fun main(args: Array<String>) {
-    SpringApplication.run(RootApplication::class.java, *args)
+    SpringApplication.run(EngineApplication::class.java, *args)
 }
