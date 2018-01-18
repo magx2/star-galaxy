@@ -10,9 +10,12 @@ internal class Orchestrator @Autowired constructor(private val engine: Engine,
                                                    private val universeLoader: UniverseLoader,
                                                    private val clock: Clock) : ApplicationRunner {
     override fun run(args: ApplicationArguments?) {
-        val universe = universeLoader.load()
-        while (true) {
-            engine.nextStep(universe, clock.next())
-        }
+        Thread({
+            val universe = universeLoader.load()
+            while (true) {
+                engine.nextStep(universe, clock.next())
+            }
+            // can add notification that engine is down
+        }, "PHYSICS-ENGINE").start()
     }
 }
