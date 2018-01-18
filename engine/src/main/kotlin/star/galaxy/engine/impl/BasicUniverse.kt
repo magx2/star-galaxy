@@ -1,15 +1,15 @@
 package star.galaxy.engine.impl
 
-import org.springframework.stereotype.Service
 import star.galaxy.engine.Universe
 import star.galaxy.engine.UniverseConstants
+import star.galaxy.engine.entites.Orb
 import star.galaxy.engine.types.ForceApplicable
+import java.util.*
 
-@Service
-class BasicUniverse : Universe {
+class BasicUniverse(orbs: Set<Orb>) : Universe {
+    private val orbs: MutableSet<Orb> = orbs.toMutableSet()
+
     override fun universeConstants() = UniverseConstants()
 
-    override fun forceApplicable(): Set<ForceApplicable> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun forceApplicable(): Set<ForceApplicable> = Collections.unmodifiableSet(orbs)
 }

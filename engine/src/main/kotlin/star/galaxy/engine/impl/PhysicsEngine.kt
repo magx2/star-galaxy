@@ -10,9 +10,8 @@ import star.galaxy.engine.types.ForceApplicable
 import javax.vecmath.Vector2d
 
 @Service
-class PhysicsEngine @Autowired constructor(private val universe: Universe,
-                                           private val gravityService: GravityService) : Engine {
-    override fun nextStep(@Second timeDelta: Int) {
+class PhysicsEngine @Autowired constructor(private val gravityService: GravityService) : Engine {
+    override fun nextStep(universe: Universe, @Second timeDelta: Int) {
         val forces = universe.forceApplicable().map { it to Vector2d() }.toMap()
 
         gravityService.applyGravity(universe.forceApplicable(), forces, universe.universeConstants())
