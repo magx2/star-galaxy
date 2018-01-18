@@ -41,7 +41,6 @@ annotation class GramInverted
 @MustBeDocumented
 annotation class Newton
 
-
 @Target(CLASS, ANNOTATION_CLASS, TYPE_PARAMETER,
         PROPERTY, FIELD, LOCAL_VARIABLE,
         VALUE_PARAMETER, CONSTRUCTOR, FUNCTION,
@@ -50,3 +49,21 @@ annotation class Newton
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
 annotation class Second
+
+@Target(CLASS, ANNOTATION_CLASS, TYPE_PARAMETER,
+        PROPERTY, FIELD, LOCAL_VARIABLE,
+        VALUE_PARAMETER, CONSTRUCTOR, FUNCTION,
+        PROPERTY_GETTER, PROPERTY_SETTER, TYPE,
+        EXPRESSION, FILE, TYPEALIAS)
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+annotation class Percentage
+
+@Target(CLASS, ANNOTATION_CLASS, TYPE_PARAMETER,
+        PROPERTY, FIELD, LOCAL_VARIABLE,
+        VALUE_PARAMETER, CONSTRUCTOR, FUNCTION,
+        PROPERTY_GETTER, PROPERTY_SETTER, TYPE,
+        EXPRESSION, FILE, TYPEALIAS)
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+annotation class Radians
