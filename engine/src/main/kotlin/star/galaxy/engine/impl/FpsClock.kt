@@ -24,6 +24,7 @@ internal class FpsClock @Autowired constructor(private val clockProperties: Cloc
         if (timeToWait - delta > 0) {
             TimeUnit.MILLISECONDS.sleep(timeToWait - delta)
         }
+        timestamp = currentTimeMillis
 
         return clockProperties.timeInGame
     }
