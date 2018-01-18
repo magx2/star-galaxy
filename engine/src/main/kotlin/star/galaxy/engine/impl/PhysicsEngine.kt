@@ -15,7 +15,7 @@ class PhysicsEngine @Autowired constructor(private val universe: Universe,
     override fun nextStep(@Second timeDelta: Int) {
         val forces = universe.forceApplicable().map { it to Vector2d() }.toMap()
 
-        gravityService.applyGravity(universe.withGravity(), forces, universe.universeConstants())
+        gravityService.applyGravity(universe.forceApplicable(), forces, universe.universeConstants())
 
         applyForces(forces, timeDelta)
     }

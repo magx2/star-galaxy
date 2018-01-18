@@ -1,13 +1,11 @@
 package star.galaxy.engine.physics.impl
 
-import jdk.vm.ci.sparc.SPARC.o1
-import jdk.vm.ci.sparc.SPARC.o2
 import org.springframework.stereotype.Service
 import star.galaxy.engine.UniverseConstants
 import star.galaxy.engine.algebra.createVector
 import star.galaxy.engine.metainformations.Newton
 import star.galaxy.engine.physics.GravityService
-import star.galaxy.engine.types.WithGravity
+import star.galaxy.engine.types.ForceApplicable
 import star.galaxy.engine.types.WithPosition
 import star.galaxy.engine.types.WithVelocity
 import javax.vecmath.Point2d
@@ -15,7 +13,7 @@ import javax.vecmath.Vector2d
 
 @Service
 class NewtonsGravityService : GravityService {
-    override fun applyGravity(objects: Set<WithGravity>, forces: Map<out WithVelocity, Vector2d>, universeConstants: UniverseConstants) {
+    override fun applyGravity(objects: Set<ForceApplicable>, forces: Map<out WithVelocity, Vector2d>, universeConstants: UniverseConstants) {
         objects.forEach { o1 ->
             objects.forEach { o2 ->
                 if (shouldComputeGravityForce(o1, o2)) {
@@ -35,7 +33,7 @@ class NewtonsGravityService : GravityService {
                 false
             }
 
-    private fun computeGravity(o1: WithGravity, o2: WithGravity, G: Double): Double {
+    private fun computeGravity(o1: ForceApplicable, o2: ForceApplicable, G: Double): Double {
         val masses = o1.mass() * o2.mass()
         val r = o1.position().distance(o2.position())
         return G * masses / r / r
