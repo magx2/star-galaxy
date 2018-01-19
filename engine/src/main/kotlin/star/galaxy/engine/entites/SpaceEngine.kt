@@ -1,19 +1,48 @@
 package star.galaxy.engine.entites
 
-import org.springframework.util.Assert.state
-import star.galaxy.engine.metainformations.Newton
+import star.galaxy.engine.algebra.copy
+import star.galaxy.engine.metainformations.Immutable
 import star.galaxy.engine.metainformations.Percentage
+import star.galaxy.engine.types.ThrustForceGenerator
+import star.galaxy.engine.utils.checkPercentage
+import javax.vecmath.Vector2d
+import kotlin.math.cos
+import kotlin.math.sin
 
-class SpaceEngine(@Newton val thurst: Double,
-                  @Percentage actualPower: Double = 0.0) {
+class SpaceEngine(@Percentage private var thrust: Double,
+                  @Immutable private val force: Vector2d,
+                  @Immutable private val vectorToParentCenterOfMass: Vector2d) : ThrustForceGenerator {
+    private val velocityForce: Vector2d
+    private val angularForce: Vector2d
+
     init {
-        state(actualPower in 0.0..1.0, "actualPower: $actualPower")
+        thrust.checkPercentage()
+
+        val alpha = force.angle(vectorToParentCenterOfMass)
+        val cosAlpha = cos(alpha)
+        val sinAlpha = sin(alpha)
+
+        velocityForce = force.copy()
+        velocityForce.scale(cosAlpha * thrust)
+
+        angularForce = force.copy()
+        angularForce.scale(sinAlpha * thrust)
     }
 
-    @Percentage
-    var actualPower: Double = actualPower
-        set(value) {
-            state(value in 0.0..1.0, "can't set actualPower to $value")
-            field = value
-        }
+    @Immutable override fun velocityForce() = velocityForce
+
+    @Immutable override fun angularForce() = angularForce
+
+    @Immutable
+    override fun vectorToParentCenterOfMass() = vectorToParentCenterOfMass
+
+    @Percentage override fun thrust() = thrust
+
+    override fun newThrust(@Percentage thrust: Double) {
+        thrust.checkPercentage()
+        val deltaThrust = thrust - this.thrust
+        velocityForce.scale(deltaThrust)
+        angularForce.scale(deltaThrust)
+        this.thrust = thrust
+    }
 }

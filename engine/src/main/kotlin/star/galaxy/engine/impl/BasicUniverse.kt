@@ -5,6 +5,7 @@ import star.galaxy.engine.UniverseConstants
 import star.galaxy.engine.entites.Orb
 import star.galaxy.engine.entites.Player
 import star.galaxy.engine.types.ForceApplicable
+import star.galaxy.engine.types.WithForceGenerators
 import java.util.Collections.unmodifiableSet
 
 class BasicUniverse(orbs: Set<Orb>,
@@ -14,9 +15,15 @@ class BasicUniverse(orbs: Set<Orb>,
 
     private val forceApplicable: Set<ForceApplicable> = joinSet(orbs, players)
 
+    private val withSpaceEngines: Set<WithForceGenerators> = joinSet(players)
+
     override fun universeConstants() = UniverseConstants()
 
-    override fun forceApplicable(): Set<ForceApplicable> = forceApplicable
+    override fun forceApplicable() = forceApplicable
+
+    override fun withForceGenerators() = withSpaceEngines
+
+    override fun angularApplicable() = withSpaceEngines
 }
 
 private fun <T> joinSet(vararg sets: Set<T>): Set<T> {

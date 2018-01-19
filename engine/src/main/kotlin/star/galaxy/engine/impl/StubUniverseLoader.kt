@@ -39,7 +39,8 @@ internal class StubUniverseLoader : UniverseLoader {
                 50_000.0)
         val player = Player(
                 IdentifiableObject(UUID.randomUUID().toString(), "player"),
-                ObjectInSpace(1_000.0, Point2d(3_000.0, 3_000.0))
+                ObjectInSpace(1_000.0, Point2d(3_000.0, 3_000.0)),
+                100.0
         )
 
         return BasicUniverse(setOf(sun, earth, mars, jupiter), setOf(player))
