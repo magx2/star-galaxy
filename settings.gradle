@@ -1,1 +1,5 @@
-include 'engine'
+include 'engine', 'gui/desktop', 'gui/core'
+//rootProject.children.forEach { println it}
+//project(":engine").name = "engine2"
+project(":gui/core").name = "core"
+project(":gui/desktop").name = "desktop"

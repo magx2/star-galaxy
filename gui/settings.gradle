@@ -1,4 +1,0 @@
-include ':desktop', ':core'
-
-project(':core').projectDir = new File('gui/core')
-project(':desktop').projectDir = new File('gui/desktop')
