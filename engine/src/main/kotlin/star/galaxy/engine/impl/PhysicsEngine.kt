@@ -13,7 +13,7 @@ import javax.vecmath.Vector2d
 @Service
 class PhysicsEngine(private val gravityService: GravityService,
                     private val spaceEngineService: SpaceEngineService) : Engine {
-    override fun nextStep(universe: Universe, @Second timeDelta: Int) {
+    override fun nextStep(universe: Universe, @Second Δt: Int) {
         val velocityForces: Map<ForceApplicable, Vector2d> = universe.forceApplicable().map { it to Vector2d() }.toMap()
         val angularTorques: MutableMap<AngularApplicable, Double> = universe.angularApplicable().map { it to 1.0 }.toMap().toMutableMap()
 
@@ -27,33 +27,33 @@ class PhysicsEngine(private val gravityService: GravityService,
                 angularTorques,
                 universe.universeConstants())
 
-        applyVelocityForces(velocityForces, timeDelta)
-        applyAngularForces(angularTorques, timeDelta)
+        applyVelocityForces(velocityForces, Δt)
+        applyAngularForces(angularTorques, Δt)
     }
 
-    private fun applyVelocityForces(forces: Map<ForceApplicable, Vector2d>, @Second timeDelta: Int) {
-        forces.forEach { (k, v) -> applyVelocityForces(k, v, timeDelta) }
+    private fun applyVelocityForces(forces: Map<ForceApplicable, Vector2d>, @Second Δt: Int) {
+        forces.forEach { (k, v) -> applyVelocityForces(k, v, Δt) }
     }
 
-    private fun applyVelocityForces(obj: ForceApplicable, force: Vector2d, @Second timeDelta: Int) {
+    private fun applyVelocityForces(obj: ForceApplicable, force: Vector2d, @Second Δt: Int) {
         force.scale(obj.invertedMass()) // acceleraton
-        force.scale(timeDelta.toDouble())
+        force.scale(Δt.toDouble())
         obj.velocity().add(force)
 
         // reusing force vector to store copy of velocity in it
         force.x = obj.velocity().x
         force.y = obj.velocity().y
 
-        force.scale(timeDelta.toDouble())
+        force.scale(Δt.toDouble())
         obj.position().add(force)
     }
 
-    private fun applyAngularForces(forces: Map<AngularApplicable, Double>, @Second timeDelta: Int) {
-        forces.forEach { (k, v) -> applyAngularForces(k, v, timeDelta) }
+    private fun applyAngularForces(forces: Map<AngularApplicable, Double>, @Second Δt: Int) {
+        forces.forEach { (k, v) -> applyAngularForces(k, v, Δt) }
     }
 
-    private fun applyAngularForces(obj: AngularApplicable, torque: Double, @Second timeDelta: Int) {
-        obj.addAngularVelocity(torque * obj.invertedInertia() * timeDelta)
-        obj.addOrientation(obj.angularVelocity() * timeDelta)
+    private fun applyAngularForces(obj: AngularApplicable, torque: Double, @Second Δt: Int) {
+        obj.addAngularVelocity(torque * obj.invertedInertia() * Δt)
+        obj.addOrientation(obj.angularVelocity() * Δt)
     }
 }
