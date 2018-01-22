@@ -16,6 +16,8 @@ internal class FpsClock(private val clockProperties: ClockProperties) : Clock {
     @Milli
     @Second
     val timeToWait: Long = TimeUnit.SECONDS.toMillis(1) / clockProperties.fps
+    @Second
+    private var time: Long = 0
 
     override fun next(): Int {
         @Milli @Second val currentTimeMillis = System.currentTimeMillis()
@@ -25,6 +27,10 @@ internal class FpsClock(private val clockProperties: ClockProperties) : Clock {
         }
         timestamp = currentTimeMillis
 
+        time += clockProperties.timeInGame
+
         return clockProperties.timeInGame
     }
+
+    override fun time() = time
 }
