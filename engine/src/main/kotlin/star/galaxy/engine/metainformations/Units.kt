@@ -18,6 +18,51 @@ annotation class Meter
         EXPRESSION, FILE, TYPEALIAS)
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
+annotation class LightYears
+
+@Target(CLASS, ANNOTATION_CLASS, TYPE_PARAMETER,
+        PROPERTY, FIELD, LOCAL_VARIABLE,
+        VALUE_PARAMETER, CONSTRUCTOR, FUNCTION,
+        PROPERTY_GETTER, PROPERTY_SETTER, TYPE,
+        EXPRESSION, FILE, TYPEALIAS)
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+annotation class LightDays
+
+@Target(CLASS, ANNOTATION_CLASS, TYPE_PARAMETER,
+        PROPERTY, FIELD, LOCAL_VARIABLE,
+        VALUE_PARAMETER, CONSTRUCTOR, FUNCTION,
+        PROPERTY_GETTER, PROPERTY_SETTER, TYPE,
+        EXPRESSION, FILE, TYPEALIAS)
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+annotation class LightHours
+
+@Target(CLASS, ANNOTATION_CLASS, TYPE_PARAMETER,
+        PROPERTY, FIELD, LOCAL_VARIABLE,
+        VALUE_PARAMETER, CONSTRUCTOR, FUNCTION,
+        PROPERTY_GETTER, PROPERTY_SETTER, TYPE,
+        EXPRESSION, FILE, TYPEALIAS)
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+annotation class LightMinutes
+
+@Target(CLASS, ANNOTATION_CLASS, TYPE_PARAMETER,
+        PROPERTY, FIELD, LOCAL_VARIABLE,
+        VALUE_PARAMETER, CONSTRUCTOR, FUNCTION,
+        PROPERTY_GETTER, PROPERTY_SETTER, TYPE,
+        EXPRESSION, FILE, TYPEALIAS)
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+annotation class LightSeconds
+
+@Target(CLASS, ANNOTATION_CLASS, TYPE_PARAMETER,
+        PROPERTY, FIELD, LOCAL_VARIABLE,
+        VALUE_PARAMETER, CONSTRUCTOR, FUNCTION,
+        PROPERTY_GETTER, PROPERTY_SETTER, TYPE,
+        EXPRESSION, FILE, TYPEALIAS)
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
 annotation class Gram
 
 @Target(CLASS, ANNOTATION_CLASS, TYPE_PARAMETER,
