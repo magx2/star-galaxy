@@ -6,16 +6,16 @@ import star.galaxy.engine.entites.Orb
 import star.galaxy.engine.entites.Player
 import star.galaxy.engine.types.ForceApplicable
 import star.galaxy.engine.types.WithForceGenerators
-import java.util.Collections.unmodifiableSet
+import star.galaxy.engine.utils.MultiSet
 
 class BasicUniverse(orbs: Set<Orb>,
                     players: Set<Player>) : Universe {
     private val orbs: MutableSet<Orb> = orbs.toMutableSet()
     private val players: MutableSet<Player> = players.toMutableSet()
 
-    private val forceApplicable: Set<ForceApplicable> = joinSet(orbs, players)
-
-    private val withSpaceEngines: Set<WithForceGenerators> = joinSet(players)
+    // generated
+    private val forceApplicable: Set<ForceApplicable> = MultiSet(orbs, players)
+    private val withSpaceEngines: Set<WithForceGenerators> = MultiSet(players)
 
     override fun universeConstants() = UniverseConstants()
 
@@ -24,10 +24,4 @@ class BasicUniverse(orbs: Set<Orb>,
     override fun withForceGenerators() = withSpaceEngines
 
     override fun angularApplicable() = withSpaceEngines
-}
-
-private fun <T> joinSet(vararg sets: Set<T>): Set<T> {
-    val set = HashSet<T>()
-    sets.forEach { set.addAll(it) }
-    return unmodifiableSet(set)
 }
