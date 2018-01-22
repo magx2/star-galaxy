@@ -112,3 +112,12 @@ annotation class Percentage
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
 annotation class Radians
+
+@Target(CLASS, ANNOTATION_CLASS, TYPE_PARAMETER,
+        PROPERTY, FIELD, LOCAL_VARIABLE,
+        VALUE_PARAMETER, CONSTRUCTOR, FUNCTION,
+        PROPERTY_GETTER, PROPERTY_SETTER, TYPE,
+        EXPRESSION, FILE, TYPEALIAS)
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+annotation class MeterSecond
