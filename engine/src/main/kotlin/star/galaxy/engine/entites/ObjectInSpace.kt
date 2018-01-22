@@ -1,9 +1,9 @@
 package star.galaxy.engine.entites
 
-import org.springframework.util.Assert
 import star.galaxy.engine.metainformations.Gram
 import star.galaxy.engine.metainformations.Kilo
 import star.galaxy.engine.types.ForceApplicable
+import star.galaxy.engine.utils.checkPositive
 import javax.vecmath.Point2d
 import javax.vecmath.Vector2d
 
@@ -13,7 +13,7 @@ class ObjectInSpace(@Kilo @Gram private val mass: Double,
     private val invertedMass = 1 / mass
 
     init {
-        Assert.state(mass > 0.0, "mass: $mass")
+        mass.checkPositive()
     }
 
     override fun mass() = mass
