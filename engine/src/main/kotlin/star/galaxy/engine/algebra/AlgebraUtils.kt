@@ -11,8 +11,10 @@ fun createVector(p1: Point2d, p2: Point2d) = Vector2d(p2.x - p1.x, p2.y - p1.y)
 fun Vector2d.copy() = Vector2d(this.x, this.y)
 
 fun Vector2d.rotateVector(@Radians angle: Double): Vector2d {
-    val x = cos(angle) * this.x - sin(angle) * this.y
-    val y = sin(angle) * this.x + cos(angle) * this.y
+    val cos = cos(angle)
+    val sin = sin(angle)
+    val x = cos * this.x - sin * this.y
+    val y = sin * this.x + cos * this.y
     this.x = x
     this.y = y
     return this
