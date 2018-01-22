@@ -1,6 +1,6 @@
 package star.galaxy.engine.types
 
-interface ForceApplicables {
+interface ForceApplicables : WithMass {
     fun center(): WithPosition
 
     fun children(): Set<ForceApplicable>
