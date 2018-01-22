@@ -28,6 +28,7 @@ class PhysicsEngine(private val gravityService: GravityService,
                 universe.universeConstants())
 
         applyVelocityForces(velocityForces, timeDelta)
+        applyAngularForces(angularTorques, timeDelta)
     }
 
     private fun applyVelocityForces(forces: Map<ForceApplicable, Vector2d>, @Second timeDelta: Int) {
