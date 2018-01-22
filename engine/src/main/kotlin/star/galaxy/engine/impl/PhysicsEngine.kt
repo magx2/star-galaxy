@@ -1,6 +1,5 @@
 package star.galaxy.engine.impl
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import star.galaxy.engine.Engine
 import star.galaxy.engine.Universe
@@ -12,8 +11,8 @@ import star.galaxy.engine.types.ForceApplicable
 import javax.vecmath.Vector2d
 
 @Service
-class PhysicsEngine @Autowired constructor(private val gravityService: GravityService,
-                                           private val spaceEngineService: SpaceEngineService) : Engine {
+class PhysicsEngine(private val gravityService: GravityService,
+                    private val spaceEngineService: SpaceEngineService) : Engine {
     override fun nextStep(universe: Universe, @Second timeDelta: Int) {
         val velocityForces: Map<ForceApplicable, Vector2d> = universe.forceApplicable().map { it to Vector2d() }.toMap()
         val angularTorques: MutableMap<AngularApplicable, Double> = universe.angularApplicable().map { it to 1.0 }.toMap().toMutableMap()

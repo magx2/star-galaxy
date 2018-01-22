@@ -1,6 +1,5 @@
 package star.galaxy.engine.impl
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import star.galaxy.engine.Clock
 import star.galaxy.engine.config.ClockProperties
@@ -9,7 +8,7 @@ import star.galaxy.engine.metainformations.Second
 import java.util.concurrent.TimeUnit
 
 @Service
-internal class FpsClock @Autowired constructor(private val clockProperties: ClockProperties) : Clock {
+internal class FpsClock(private val clockProperties: ClockProperties) : Clock {
     @Milli
     @Second
     var timestamp = System.currentTimeMillis()
