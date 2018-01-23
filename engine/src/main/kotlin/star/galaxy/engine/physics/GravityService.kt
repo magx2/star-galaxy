@@ -10,4 +10,7 @@ interface GravityService {
     fun applyGravity(objects: Set<ForceApplicable>,
                      forces: Map<out WithVelocity, @Newton Vector2d>,
                      universeConstants: UniverseConstants)
+
+    @Newton
+    fun gravityForceValue(o1: ForceApplicable, o2: ForceApplicable, universeConstants: UniverseConstants): Double
 }
