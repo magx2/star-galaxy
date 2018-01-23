@@ -7,9 +7,9 @@ import star.galaxy.engine.utils.checkPositive
 import javax.vecmath.Point2d
 import javax.vecmath.Vector2d
 
-class ObjectInSpace(@Kilo @Gram private val mass: Double,
-                    private val position: Point2d,
-                    private val velocity: Vector2d = Vector2d()) : ForceApplicable {
+data class ObjectInSpace(@Kilo @Gram private val mass: Double,
+                         private val position: Point2d,
+                         private val velocity: Vector2d = Vector2d()) : ForceApplicable {
     private val invertedMass = 1 / mass
 
     init {

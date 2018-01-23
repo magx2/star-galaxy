@@ -1,14 +1,19 @@
 package star.galaxy.engine.physics.impl
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.offset
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
 import star.galaxy.engine.UniverseConstants
+import star.galaxy.engine.algebra.copy
+import star.galaxy.engine.algebra.createVector
 import star.galaxy.engine.entites.ObjectInSpace
 import javax.vecmath.Point2d
+import javax.vecmath.Vector2d
+import kotlin.math.abs
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
@@ -59,5 +64,125 @@ class NewtonsGravityServiceTest {
 
         // then
         assertThat(forceValue).isZero()
+    }
+
+    @Test
+    fun `should apply gravity forces to all objects`() {
+
+        // given
+        val o1 = ObjectInSpace(100.0, Point2d(-7.0, 5.0))
+        val o2 = ObjectInSpace(30.0, Point2d(-4.0, -10.0))
+        val o3 = ObjectInSpace(300.0, Point2d(10.0, 8.0))
+
+        val f1Init = Vector2d(10.0, 15.0)
+        val f2Init = Vector2d(100.0, 70.0)
+        val f3Init = Vector2d()
+
+        val f12 = service.gravityForceValue(o1, o2, universeConstants)
+        val f13 = service.gravityForceValue(o1, o3, universeConstants)
+        val f23 = service.gravityForceValue(o2, o3, universeConstants)
+
+        val v12 = createVector(o1, o2)
+        v12.normalize()
+        v12.scale(f12)
+        val v13 = createVector(o1, o3)
+        v13.normalize()
+        v13.scale(f13)
+
+        val v21 = createVector(o2, o1)
+        v21.normalize()
+        v21.scale(f12)
+        val v23 = createVector(o2, o3)
+        v23.normalize()
+        v23.scale(f23)
+
+        val v31 = createVector(o3, o1)
+        v31.normalize()
+        v31.scale(f13)
+        val v32 = createVector(o3, o2)
+        v32.normalize()
+        v32.scale(f23)
+
+        val f1Out = f1Init.copy()
+        f1Out.add(v12)
+        f1Out.add(v13)
+
+        val f2Out = f2Init.copy()
+        f2Out.add(v21)
+        f2Out.add(v23)
+
+        val f3Out = f3Init.copy()
+        f3Out.add(v31)
+        f3Out.add(v32)
+
+        val forces = mapOf(
+                Pair(o1, f1Init.copy()),
+                Pair(o2, f2Init.copy()),
+                Pair(o3, f3Init.copy())
+        )
+
+        val offsetValue = 0.01
+
+        // when
+        service.applyGravity(listOf(o1, o2, o3), forces, universeConstants)
+
+        // then
+        val f1 = forces[o1]!!
+        assertThat(f1.x).isEqualTo(f1Out.x, offset(abs(offsetValue * f1Out.x)))
+        assertThat(f1.y).isEqualTo(f1Out.y, offset(abs(offsetValue * f1Out.x)))
+
+        val f2 = forces[o2]!!
+        assertThat(f2.x).isEqualTo(f2Out.x, offset(abs(offsetValue * f2Out.x)))
+        assertThat(f2.y).isEqualTo(f2Out.y, offset(abs(offsetValue * f2Out.y)))
+
+        val f3 = forces[o3]!!
+        assertThat(f3.x).isEqualTo(f3Out.x, offset(abs(offsetValue * f3Out.x)))
+        assertThat(f3.y).isEqualTo(f3Out.y, offset(abs(offsetValue * f3Out.y)))
+    }
+
+    @Test
+    fun `should apply gravity forces to all objects - 2 objects`() {
+
+        // given
+        val o1 = ObjectInSpace(2.0, Point2d(-7.0, 6.0))
+        val o2 = ObjectInSpace(3.0, Point2d(-4.0, 1.0))
+
+        val f1Init = Vector2d(10.0, 15.0)
+        val f2Init = Vector2d(100.0, 70.0)
+
+        val f12 = service.gravityForceValue(o1, o2, universeConstants)
+
+        val v12 = createVector(o1, o2)
+        v12.normalize()
+        v12.scale(f12)
+
+        val v21 = createVector(o2, o1)
+        v21.normalize()
+        v21.scale(f12)
+
+        val f1Out = f1Init.copy()
+        f1Out.add(v12)
+
+        val f2Out = f2Init.copy()
+        f2Out.add(v21)
+
+        val forces = mapOf(
+                Pair(o1, f1Init.copy()),
+                Pair(o2, f2Init.copy())
+        )
+
+        val offsetValue = 0.1
+
+        // when
+        service.applyGravity(listOf(o1, o2), forces, universeConstants)
+
+        // then
+        val f1 = forces[o1]!!
+        assertThat(f1.x).isEqualTo(f1Out.x, offset(abs(offsetValue * f1Out.x)))
+        assertThat(f1.y).isEqualTo(f1Out.y, offset(abs(offsetValue * f1Out.x)))
+
+        val f2 = forces[o2]!!
+        assertThat(f2.x).isEqualTo(f2Out.x, offset(abs(offsetValue * f2Out.x)))
+        assertThat(f2.y).isEqualTo(f2Out.y, offset(abs(offsetValue * f2Out.y)))
     }
 }

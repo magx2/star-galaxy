@@ -1,12 +1,15 @@
 package star.galaxy.engine.algebra
 
 import star.galaxy.engine.metainformations.Radians
+import star.galaxy.engine.types.WithPosition
 import javax.vecmath.Point2d
 import javax.vecmath.Vector2d
 import kotlin.math.cos
 import kotlin.math.sin
 
 fun createVector(p1: Point2d, p2: Point2d) = Vector2d(p2.x - p1.x, p2.y - p1.y)
+
+fun createVector(p1: WithPosition, p2: WithPosition) = createVector(p1.position(), p2.position())
 
 fun Vector2d.copy() = Vector2d(this.x, this.y)
 

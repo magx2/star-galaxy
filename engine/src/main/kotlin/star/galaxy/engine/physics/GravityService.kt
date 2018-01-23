@@ -7,7 +7,7 @@ import star.galaxy.engine.types.WithVelocity
 import javax.vecmath.Vector2d
 
 interface GravityService {
-    fun applyGravity(objects: Set<ForceApplicable>,
+    fun applyGravity(objects: List<ForceApplicable>,
                      forces: Map<out WithVelocity, @Newton Vector2d>,
                      universeConstants: UniverseConstants)
 

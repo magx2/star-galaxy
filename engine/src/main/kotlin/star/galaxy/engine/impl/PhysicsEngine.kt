@@ -18,7 +18,7 @@ class PhysicsEngine(private val gravityService: GravityService,
         val angularTorques: MutableMap<AngularApplicable, Double> = universe.angularApplicable().map { it to 1.0 }.toMap().toMutableMap()
 
         gravityService.applyGravity(
-                universe.forceApplicable(),
+                ArrayList(),//universe.forceApplicable(),
                 velocityForces,
                 universe.universeConstants())
         spaceEngineService.applyForceFromForceGenerators(
