@@ -17,13 +17,7 @@ class MultiSet<T>(private val sets: Set<Set<T>>) : Set<T> {
                     .isPresent
                     .not()
 
-    override fun isEmpty() =
-            sets.stream()
-                    .map { it.isEmpty() }
-                    .filter { !it }
-                    .findAny()
-                    .isPresent
-                    .not()
+    override fun isEmpty() = size == 0
 
     override fun iterator(): Iterator<T> = MultiSetIterator()
 
