@@ -171,7 +171,7 @@ class NewtonsGravityServiceTest {
                 Pair(o2, f2Init.copy())
         )
 
-        val offsetValue = 0.1
+        val offsetValue = 0.01
 
         // when
         service.applyGravity(listOf(o1, o2), forces, universeConstants)
