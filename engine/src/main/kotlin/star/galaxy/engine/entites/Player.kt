@@ -2,21 +2,22 @@ package star.galaxy.engine.entites
 
 import star.galaxy.engine.metainformations.Newton
 import star.galaxy.engine.metainformations.Radians
-import star.galaxy.engine.types.ForceApplicable
-import star.galaxy.engine.types.WithThrustForceGenerators
-import star.galaxy.engine.types.WithUuid
+import star.galaxy.engine.types.*
 import star.galaxy.engine.utils.checkPositive
 
 data class Player(private val identifiableObject: IdentifiableObject,
                   private val objectInSpace: ObjectInSpace,
                   private val inertia: Double,
+                  private val sphereShape: SphereShape,
                   @Radians private var orientation: Double = 0.0,
                   @Newton private var angularVelocity: Double = 0.0,
                   @Newton private var torque: Double = 0.0,
                   private val engines: Set<SpaceEngine> = setOf()) :
         ForceApplicable by objectInSpace,
         WithUuid by identifiableObject,
-        WithThrustForceGenerators {
+        WithThrustForceGenerators,
+        SphereShape by sphereShape,
+        SphereShapeWithPosition {
 
     init {
         inertia.checkPositive()

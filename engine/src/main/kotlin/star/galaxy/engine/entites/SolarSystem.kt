@@ -1,10 +1,7 @@
 package star.galaxy.engine.entites
 
 import star.galaxy.engine.metainformations.Immutable
-import star.galaxy.engine.types.ForceApplicable
-import star.galaxy.engine.types.ForceApplicables
-import star.galaxy.engine.types.SphereShape
-import star.galaxy.engine.types.WithPosition
+import star.galaxy.engine.types.*
 import javax.vecmath.Vector2d
 
 class SolarSystem(private val center: WithPosition,
@@ -12,7 +9,8 @@ class SolarSystem(private val center: WithPosition,
                   private val sphereShape: SphereShape,
                   private val velocity: Vector2d = Vector2d()) :
         ForceApplicables,
-        SphereShape by sphereShape {
+        SphereShape by sphereShape,
+        SphereShapeWithPosition {
     private val mass = children.stream().mapToDouble { it.mass() }.sum()
     private val invertedMass = 1 / mass
 
