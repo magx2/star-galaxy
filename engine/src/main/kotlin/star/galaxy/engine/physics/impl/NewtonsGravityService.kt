@@ -12,8 +12,8 @@ import javax.vecmath.Vector2d
 @Service
 class NewtonsGravityService : GravityService {
     override fun applyGravity(objects: List<ForceApplicable>, forces: Map<out WithVelocity, Vector2d>, universeConstants: UniverseConstants) {
-        for (idx1 in 0 until objects.size) {
-            for (idx2 in idx1 until objects.size) {
+        for (idx1 in 0 until (objects.size - 1)) {
+            for (idx2 in (idx1 + 1) until objects.size) {
                 val o1 = objects[idx1]
                 val o2 = objects[idx2]
 
