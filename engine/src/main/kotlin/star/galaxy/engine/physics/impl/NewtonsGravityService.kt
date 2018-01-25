@@ -1,17 +1,16 @@
 package star.galaxy.engine.physics.impl
 
 import org.springframework.stereotype.Service
+import star.galaxy.engine.ForceService
 import star.galaxy.engine.UniverseConstants
 import star.galaxy.engine.algebra.createVector
 import star.galaxy.engine.metainformations.Newton
 import star.galaxy.engine.physics.GravityService
 import star.galaxy.engine.types.ForceApplicable
-import star.galaxy.engine.types.WithVelocity
-import javax.vecmath.Vector2d
 
 @Service
-class NewtonsGravityService : GravityService {
-    override fun applyGravity(objects: List<ForceApplicable>, forces: Map<out WithVelocity, Vector2d>, universeConstants: UniverseConstants) {
+class NewtonsGravityService(private val forceService: ForceService) : GravityService {
+    override fun applyGravity(objects: List<ForceApplicable>, universeConstants: UniverseConstants) {
         for (idx1 in 0 until (objects.size - 1)) {
             for (idx2 in (idx1 + 1) until objects.size) {
                 val o1 = objects[idx1]
@@ -20,8 +19,8 @@ class NewtonsGravityService : GravityService {
                 @Newton val gravityValue = gravityForceValue(o1, o2, universeConstants)
 
                 if (gravityValue > 0.0) {
-                    val force1 = forces[o1]!!
-                    val force2 = forces[o2]!!
+                    val force1 = forceService[o1]
+                    val force2 = forceService[o2]
 
                     // applying force to o1
                     val gravityForce = createVector(o1, o2)

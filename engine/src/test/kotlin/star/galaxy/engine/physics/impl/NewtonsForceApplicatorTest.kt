@@ -6,6 +6,7 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
+import star.galaxy.engine.ForceService
 import star.galaxy.engine.algebra.copy
 import star.galaxy.engine.entites.Galaxy
 import star.galaxy.engine.entites.ObjectInSpace
@@ -21,20 +22,23 @@ import javax.vecmath.Vector2d
 class NewtonsForceApplicatorTest {
     @Autowired
     private lateinit var service: NewtonsForceApplicator
+    @Autowired
+    private lateinit var forceService: ForceService
 
     @Test
     fun `should apply force to ForceApplicable`() {
 
         // given
         val initialForce = Vector2d(10.0, -20.0)
-        val force = initialForce.copy()
         val mass = 2.0
         val position = Point2d(30.0, -60.0)
         val velocity = Vector2d(-2.0, 7.0)
         val obj = ObjectInSpace(mass, position.copy(), velocity.copy())
         val Δt = 23.0
 
-        val forceOnObj = force.copy()
+        forceService[obj].x = initialForce.x
+        forceService[obj].y = initialForce.y
+        val forceOnObj = initialForce.copy()
         forceOnObj.scale(obj.invertedMass())
         forceOnObj.scale(Δt)
 
@@ -46,21 +50,19 @@ class NewtonsForceApplicatorTest {
         expectedPosition.y += expectedVelocity.y * Δt
 
         // when
-        service.apply(force, obj, Δt)
+        service.apply(obj, Δt)
 
         // then
         assertThat(obj.velocity()).isEqualToComparingFieldByField(expectedVelocity)
         assertThat(obj.position()).isEqualToComparingFieldByField(expectedPosition)
-        assertThat(force).isEqualToComparingFieldByField(initialForce)
+        assertThat(forceService[obj]).isEqualToComparingFieldByField(initialForce)
     }
-
 
     @Test
     fun `should apply force to ForceApplicables`() {
 
         // given
         val initialForce = Vector2d(20.0, 30.0)
-        val force = initialForce.copy()
         val position = Point2d(-20.0, -10.0)
         val velocity = Vector2d()
 
@@ -88,7 +90,9 @@ class NewtonsForceApplicatorTest {
         val obj = Galaxy(forceApplicables, Point(position), velocity.copy())
         val Δt = 2.0
 
-        val forceOnObj = force.copy()
+        forceService[obj].x = initialForce.x
+        forceService[obj].y = initialForce.y
+        val forceOnObj = initialForce.copy()
         forceOnObj.scale(obj.invertedMass())
         forceOnObj.scale(Δt)
 
@@ -115,7 +119,7 @@ class NewtonsForceApplicatorTest {
         expectedP3.y += expectedVelocity.y * Δt
 
         // when
-        service.apply(force, obj, Δt)
+        service.apply(obj, Δt)
 
         // then
         assertThat(obj.velocity()).isEqualToComparingFieldByField(expectedVelocity)
@@ -130,6 +134,6 @@ class NewtonsForceApplicatorTest {
         assertThat(forceApplicables[2].velocity()).isEqualToComparingFieldByField(expectedV3)
         assertThat(forceApplicables[2].position()).isEqualToComparingFieldByField(expectedP3)
 
-        assertThat(force).isEqualToComparingFieldByField(initialForce)
+        assertThat(forceService[obj]).isEqualToComparingFieldByField(initialForce)
     }
 }

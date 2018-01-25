@@ -7,6 +7,7 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
+import star.galaxy.engine.ForceService
 import star.galaxy.engine.UniverseConstants
 import star.galaxy.engine.algebra.copy
 import star.galaxy.engine.algebra.createVector
@@ -21,6 +22,8 @@ class NewtonsGravityServiceTest {
     val universeConstants = UniverseConstants()
     @Autowired
     lateinit var service: NewtonsGravityService
+    @Autowired
+    private lateinit var forceService: ForceService
 
     @Test
     fun `should count gravity force for 2 different objects`() {
@@ -115,27 +118,28 @@ class NewtonsGravityServiceTest {
         f3Out.add(v31)
         f3Out.add(v32)
 
-        val forces = mapOf(
-                Pair(o1, f1Init.copy()),
-                Pair(o2, f2Init.copy()),
-                Pair(o3, f3Init.copy())
-        )
+        forceService[o1].x = f1Init.x
+        forceService[o1].y = f1Init.y
+        forceService[o2].x = f2Init.x
+        forceService[o2].y = f2Init.y
+        forceService[o3].x = f3Init.x
+        forceService[o3].y = f3Init.y
 
         val offsetValue = 0.01
 
         // when
-        service.applyGravity(listOf(o1, o2, o3), forces, universeConstants)
+        service.applyGravity(listOf(o1, o2, o3), universeConstants)
 
         // then
-        val f1 = forces[o1]!!
+        val f1 = forceService[o1]
         assertThat(f1.x).isEqualTo(f1Out.x, offset(abs(offsetValue * f1Out.x)))
         assertThat(f1.y).isEqualTo(f1Out.y, offset(abs(offsetValue * f1Out.x)))
 
-        val f2 = forces[o2]!!
+        val f2 = forceService[o2]
         assertThat(f2.x).isEqualTo(f2Out.x, offset(abs(offsetValue * f2Out.x)))
         assertThat(f2.y).isEqualTo(f2Out.y, offset(abs(offsetValue * f2Out.y)))
 
-        val f3 = forces[o3]!!
+        val f3 = forceService[o3]
         assertThat(f3.x).isEqualTo(f3Out.x, offset(abs(offsetValue * f3Out.x)))
         assertThat(f3.y).isEqualTo(f3Out.y, offset(abs(offsetValue * f3Out.y)))
     }
@@ -166,22 +170,22 @@ class NewtonsGravityServiceTest {
         val f2Out = f2Init.copy()
         f2Out.add(v21)
 
-        val forces = mapOf(
-                Pair(o1, f1Init.copy()),
-                Pair(o2, f2Init.copy())
-        )
+        forceService[o1].x = f1Init.x
+        forceService[o1].y = f1Init.y
+        forceService[o2].x = f2Init.x
+        forceService[o2].y = f2Init.y
 
         val offsetValue = 0.01
 
         // when
-        service.applyGravity(listOf(o1, o2), forces, universeConstants)
+        service.applyGravity(listOf(o1, o2), universeConstants)
 
         // then
-        val f1 = forces[o1]!!
+        val f1 = forceService[o1]
         assertThat(f1.x).isEqualTo(f1Out.x, offset(abs(offsetValue * f1Out.x)))
         assertThat(f1.y).isEqualTo(f1Out.y, offset(abs(offsetValue * f1Out.x)))
 
-        val f2 = forces[o2]!!
+        val f2 = forceService[o2]
         assertThat(f2.x).isEqualTo(f2Out.x, offset(abs(offsetValue * f2Out.x)))
         assertThat(f2.y).isEqualTo(f2Out.y, offset(abs(offsetValue * f2Out.y)))
     }

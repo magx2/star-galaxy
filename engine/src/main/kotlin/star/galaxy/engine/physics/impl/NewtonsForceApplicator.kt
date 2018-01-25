@@ -1,16 +1,16 @@
 package star.galaxy.engine.physics.impl
 
 import org.springframework.stereotype.Service
-import star.galaxy.engine.metainformations.Immutable
+import star.galaxy.engine.ForceService
 import star.galaxy.engine.physics.ForceApplicator
 import star.galaxy.engine.types.ForceApplicable
 import star.galaxy.engine.types.ForceApplicables
-import javax.vecmath.Vector2d
 
 @Service
-internal class NewtonsForceApplicator : ForceApplicator {
-    override fun apply(@Immutable force: Vector2d, obj: ForceApplicables, Δt: Double) {
+internal class NewtonsForceApplicator(private val forceService: ForceService) : ForceApplicator {
+    override fun apply(obj: ForceApplicables, Δt: Double) {
         val invertedMass = obj.invertedMass()
+        val force = forceService[obj]
         val vx = force.x * invertedMass * Δt
         val vy = force.y * invertedMass * Δt
         obj.velocity().x += vx
@@ -30,8 +30,9 @@ internal class NewtonsForceApplicator : ForceApplicator {
         }
     }
 
-    override fun apply(@Immutable force: Vector2d, obj: ForceApplicable, Δt: Double) {
+    override fun apply(obj: ForceApplicable, Δt: Double) {
         val invertedMass = obj.invertedMass()
+        val force = forceService[obj]
         obj.velocity().x += force.x * invertedMass * Δt
         obj.velocity().y += force.y * invertedMass * Δt
 

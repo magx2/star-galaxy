@@ -25,7 +25,7 @@ class MultiList<T>(private val lists: List<List<T>>) : List<T> {
                     .flatMap { it.stream() }
                     .skip(index.toLong())
                     .findFirst()
-                    .orElseThrow { throw IndexOutOfBoundsException(index) }
+                    .orElseThrow { throw IndexOutOfBoundsException("Idx $index out of range") }
 
     override fun indexOf(element: T): Int {
         var idx = 0

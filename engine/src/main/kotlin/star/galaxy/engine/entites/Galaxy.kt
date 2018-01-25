@@ -2,13 +2,18 @@ package star.galaxy.engine.entites
 
 import star.galaxy.engine.types.ForceApplicables
 import star.galaxy.engine.types.WithPosition
+import star.galaxy.engine.types.WithUuid
+import java.util.*
 import javax.vecmath.Vector2d
 import kotlin.math.sqrt
 
-data class Galaxy(private val forceApplicables: List<ForceApplicables>,
-                  private val position: WithPosition,
-                  private val velocity: Vector2d = Vector2d()) : ForceApplicables, WithPosition by position {
-
+class Galaxy(private val forceApplicables: List<ForceApplicables>,
+             private val position: WithPosition,
+             private val velocity: Vector2d = Vector2d(),
+             private val uuid: String = UUID.randomUUID().toString()) :
+        ForceApplicables,
+        WithPosition by position,
+        WithUuid {
     override fun children(): List<ForceApplicables> = forceApplicables
 
     override fun velocity() = velocity
@@ -28,4 +33,6 @@ data class Galaxy(private val forceApplicables: List<ForceApplicables>,
             forceApplicables.stream()
                     .mapToDouble { it.invertedMass() }
                     .sum()
+
+    override fun uuid() = uuid
 }
