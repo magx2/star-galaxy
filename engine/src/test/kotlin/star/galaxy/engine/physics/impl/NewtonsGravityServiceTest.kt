@@ -36,7 +36,7 @@ class NewtonsGravityServiceTest {
         val expectedForce = universeConstants.G * (o1.mass() * o2.mass()) / r / r
 
         // when
-        val forceValue = service.gravityForceValue(o1, o2, universeConstants)
+        val forceValue = service.gravityForceValue(o1, o2)
 
         // then
         assertThat(forceValue).isEqualTo(expectedForce)
@@ -49,7 +49,7 @@ class NewtonsGravityServiceTest {
         val o1 = ObjectInSpace(100.0, Point2d(-100.0, 50.0))
 
         // when
-        val forceValue = service.gravityForceValue(o1, o1, universeConstants)
+        val forceValue = service.gravityForceValue(o1, o1)
 
         // then
         assertThat(forceValue).isZero()
@@ -63,7 +63,7 @@ class NewtonsGravityServiceTest {
         val o2 = ObjectInSpace(30.0, Point2d(-100.0, 50.0))
 
         // when
-        val forceValue = service.gravityForceValue(o1, o2, universeConstants)
+        val forceValue = service.gravityForceValue(o1, o2)
 
         // then
         assertThat(forceValue).isZero()
@@ -81,9 +81,9 @@ class NewtonsGravityServiceTest {
         val f2Init = Vector2d(100.0, 70.0)
         val f3Init = Vector2d()
 
-        val f12 = service.gravityForceValue(o1, o2, universeConstants)
-        val f13 = service.gravityForceValue(o1, o3, universeConstants)
-        val f23 = service.gravityForceValue(o2, o3, universeConstants)
+        val f12 = service.gravityForceValue(o1, o2)
+        val f13 = service.gravityForceValue(o1, o3)
+        val f23 = service.gravityForceValue(o2, o3)
 
         val v12 = createVector(o1, o2)
         v12.normalize()
@@ -128,7 +128,7 @@ class NewtonsGravityServiceTest {
         val offsetValue = 0.01
 
         // when
-        service.applyGravity(listOf(o1, o2, o3), universeConstants)
+        service.applyGravity(listOf(o1, o2, o3))
 
         // then
         val f1 = forceService[o1]
@@ -154,7 +154,7 @@ class NewtonsGravityServiceTest {
         val f1Init = Vector2d(10.0, 15.0)
         val f2Init = Vector2d(100.0, 70.0)
 
-        val f12 = service.gravityForceValue(o1, o2, universeConstants)
+        val f12 = service.gravityForceValue(o1, o2)
 
         val v12 = createVector(o1, o2)
         v12.normalize()
@@ -178,7 +178,7 @@ class NewtonsGravityServiceTest {
         val offsetValue = 0.01
 
         // when
-        service.applyGravity(listOf(o1, o2), universeConstants)
+        service.applyGravity(listOf(o1, o2))
 
         // then
         val f1 = forceService[o1]

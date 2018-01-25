@@ -14,13 +14,13 @@ import star.galaxy.engine.types.AngularApplicable
 class PhysicsEngine(private val gravityService: GravityService,
                     private val spaceEngineService: SpaceEngineService,
                     private val forceApplicator: ForceApplicator,
-                    private val forceService: ForceService) : Engine {
-    override fun nextStep(universe: Universe, @Second Δt: Int) {
+                    private val forceService: ForceService,
+                    private val universe: Universe) : Engine {
+    override fun nextStep(@Second Δt: Int) {
         val allForceApplicables = universe.allForceApplicables()
 
         gravityService.applyGravity(
-                allForceApplicables,
-                universe.universeConstants())
+                allForceApplicables)
 
         allForceApplicables.forEach { forceApplicator.apply(it, Δt.toDouble()) }
         forceService.clear()

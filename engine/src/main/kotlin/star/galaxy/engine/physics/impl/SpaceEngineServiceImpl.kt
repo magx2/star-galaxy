@@ -10,27 +10,24 @@ import star.galaxy.engine.types.WithForceGenerators
 import javax.vecmath.Vector2d
 
 @Service
-internal class SpaceEngineServiceImpl : SpaceEngineService {
+internal class SpaceEngineServiceImpl(private val universeConstants: UniverseConstants) : SpaceEngineService {
     override fun applyForceFromForceGenerators(objects: Set<WithForceGenerators>,
                                                velocityForces: Map<out ForceApplicable, Vector2d>,
-                                               angularTorques: MutableMap<AngularApplicable, Double>,
-                                               universeConstants: UniverseConstants) {
+                                               angularTorques: MutableMap<AngularApplicable, Double>) {
         objects.forEach {
-            velocity(it, velocityForces, universeConstants)
-            angular(it, angularTorques, universeConstants)
+            velocity(it, velocityForces)
+            angular(it, angularTorques)
         }
     }
 
     private fun velocity(obj: WithForceGenerators,
-                         velocityForces: Map<out ForceApplicable, Vector2d>,
-                         universeConstants: UniverseConstants) {
+                         velocityForces: Map<out ForceApplicable, Vector2d>) {
         val force = velocityForces[obj]!!
         obj.forceGenerators().forEach { force.add(it.velocityForce()) }
     }
 
     private fun angular(obj: WithForceGenerators,
-                        angularTorques: MutableMap<AngularApplicable, Double>,
-                        universeConstants: UniverseConstants) {
+                        angularTorques: MutableMap<AngularApplicable, Double>) {
         val torque = angularTorques[obj]!! + obj.forceGenerators()
                 .stream()
                 .mapToDouble { it.vectorToParentCenterOfMass() cross it.angularForce() }

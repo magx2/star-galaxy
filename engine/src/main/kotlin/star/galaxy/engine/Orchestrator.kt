@@ -6,13 +6,11 @@ import org.springframework.stereotype.Component
 
 @Component
 internal class Orchestrator(private val engine: Engine,
-                            private val universeLoader: UniverseLoader,
                             private val clock: Clock) : ApplicationRunner {
     override fun run(args: ApplicationArguments?) {
         Thread({
-            val universe = universeLoader.load()
             while (true) {
-                engine.nextStep(universe, clock.next())
+                engine.nextStep(clock.next())
             }
             // can add notification that engine is down
         }, "PHYSICS-ENGINE").start()

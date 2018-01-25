@@ -9,14 +9,15 @@ import star.galaxy.engine.physics.GravityService
 import star.galaxy.engine.types.ForceApplicable
 
 @Service
-class NewtonsGravityService(private val forceService: ForceService) : GravityService {
-    override fun applyGravity(objects: List<ForceApplicable>, universeConstants: UniverseConstants) {
+class NewtonsGravityService(private val forceService: ForceService,
+                            private val universeConstants: UniverseConstants) : GravityService {
+    override fun applyGravity(objects: List<ForceApplicable>) {
         for (idx1 in 0 until (objects.size - 1)) {
             for (idx2 in (idx1 + 1) until objects.size) {
                 val o1 = objects[idx1]
                 val o2 = objects[idx2]
 
-                @Newton val gravityValue = gravityForceValue(o1, o2, universeConstants)
+                @Newton val gravityValue = gravityForceValue(o1, o2)
 
                 if (gravityValue > 0.0) {
                     val force1 = forceService[o1]
@@ -36,7 +37,7 @@ class NewtonsGravityService(private val forceService: ForceService) : GravitySer
         }
     }
 
-    override fun gravityForceValue(o1: ForceApplicable, o2: ForceApplicable, universeConstants: UniverseConstants) =
+    override fun gravityForceValue(o1: ForceApplicable, o2: ForceApplicable) =
             if (o1 !== o2) {
                 val r = o1.position().distanceSquared(o2.position())
                 if (r > 0.0) {
