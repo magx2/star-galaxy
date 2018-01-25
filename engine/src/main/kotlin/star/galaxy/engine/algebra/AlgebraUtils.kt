@@ -13,6 +13,18 @@ fun createVector(p1: WithPosition, p2: WithPosition) = createVector(p1.position(
 
 fun Vector2d.copy() = Vector2d(this.x, this.y)
 
+fun Point2d.copy() = Point2d(this.x, this.y)
+
+fun Vector2d.clear() {
+    this.x = 0.0
+    this.y = 0.0
+}
+
+fun Point2d.clear() {
+    this.x = 0.0
+    this.y = 0.0
+}
+
 fun Vector2d.rotateVector(@Radians angle: Double): Vector2d {
     val cos = cos(angle)
     val sin = sin(angle)

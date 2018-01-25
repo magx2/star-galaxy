@@ -14,21 +14,14 @@ import javax.vecmath.Vector2d
 class PhysicsEngine(private val gravityService: GravityService,
                     private val spaceEngineService: SpaceEngineService) : Engine {
     override fun nextStep(universe: Universe, @Second Δt: Int) {
-        val velocityForces: Map<ForceApplicable, Vector2d> = universe.forceApplicable().map { it to Vector2d() }.toMap()
-        val angularTorques: MutableMap<AngularApplicable, Double> = universe.angularApplicable().map { it to 1.0 }.toMap().toMutableMap()
+        val velocityForces: Map<ForceApplicable, Vector2d> = universe.allForceApplicables().map { it to Vector2d() }.toMap()
 
         gravityService.applyGravity(
-                ArrayList(),//universe.forceApplicable(),
+                universe.allForceApplicables(),
                 velocityForces,
-                universe.universeConstants())
-        spaceEngineService.applyForceFromForceGenerators(
-                universe.withForceGenerators(),
-                velocityForces,
-                angularTorques,
                 universe.universeConstants())
 
         applyVelocityForces(velocityForces, Δt)
-        applyAngularForces(angularTorques, Δt)
     }
 
     private fun applyVelocityForces(forces: Map<ForceApplicable, Vector2d>, @Second Δt: Int) {

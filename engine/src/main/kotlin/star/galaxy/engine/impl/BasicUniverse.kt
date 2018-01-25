@@ -2,24 +2,17 @@ package star.galaxy.engine.impl
 
 import star.galaxy.engine.Universe
 import star.galaxy.engine.UniverseConstants
-import star.galaxy.engine.entites.Orb
+import star.galaxy.engine.entites.Galaxy
 import star.galaxy.engine.entites.Player
-import star.galaxy.engine.types.ForceApplicable
-import star.galaxy.engine.types.WithForceGenerators
-import star.galaxy.engine.utils.MultiSet
+import star.galaxy.engine.utils.MultiList
 
-class BasicUniverse(orbs: Set<Orb>,
-                    players: Set<Player>) : Universe {
-    private val orbs: MutableSet<Orb> = orbs.toMutableSet()
-    private val players: MutableSet<Player> = players.toMutableSet()
-
-    // generated
-    private val forceApplicable: Set<ForceApplicable> = MultiSet(orbs, players)
-    private val withSpaceEngines: Set<WithForceGenerators> = MultiSet(players)
+class BasicUniverse(private val galaxies: List<Galaxy>,
+                    private val players: List<Player>) : Universe {
+    private val withSpaceEngines = MultiList(players)
 
     override fun universeConstants() = UniverseConstants()
 
-    override fun forceApplicable() = forceApplicable
+    override fun allForceApplicables() = galaxies
 
     override fun withForceGenerators() = withSpaceEngines
 

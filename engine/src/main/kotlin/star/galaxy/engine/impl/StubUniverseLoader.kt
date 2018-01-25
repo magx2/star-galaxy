@@ -41,7 +41,8 @@ internal class StubUniverseLoader : UniverseLoader {
                 SphereShapeImpl(300_000.0)
         )
 
-        return BasicUniverse(setOf(sun, earth, mars, jupiter), setOf(player))
+//        return BasicUniverse(listOf(sun, earth, mars, jupiter), setOf(player))
+        TODO()
     }
 
     override fun save(universe: Universe) = Unit

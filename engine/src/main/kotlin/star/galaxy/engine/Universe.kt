@@ -1,15 +1,15 @@
 package star.galaxy.engine
 
 import star.galaxy.engine.types.AngularApplicable
-import star.galaxy.engine.types.ForceApplicable
+import star.galaxy.engine.types.ForceApplicables
 import star.galaxy.engine.types.WithForceGenerators
 
 interface Universe {
     fun universeConstants(): UniverseConstants
 
-    fun forceApplicable(): Set<ForceApplicable>
+    fun allForceApplicables(): List<ForceApplicables>
 
-    fun withForceGenerators(): Set<WithForceGenerators>
+    fun withForceGenerators(): List<WithForceGenerators>
 
-    fun angularApplicable(): Set<AngularApplicable>
+    fun angularApplicable(): List<AngularApplicable>
 }
