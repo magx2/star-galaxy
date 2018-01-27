@@ -7,6 +7,7 @@ import org.mockito.BDDMockito.verify
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import star.galaxy.engine.ForceService
 import star.galaxy.engine.Universe
@@ -20,6 +21,7 @@ import javax.vecmath.Vector2d
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
+@ActiveProfiles("test")
 class PhysicsEngineTest {
     @Autowired
     lateinit var physicsEngine: PhysicsEngine
