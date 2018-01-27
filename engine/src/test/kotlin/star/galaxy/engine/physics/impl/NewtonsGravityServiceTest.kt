@@ -6,6 +6,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import star.galaxy.engine.ForceService
 import star.galaxy.engine.UniverseConstants
@@ -18,6 +19,7 @@ import kotlin.math.abs
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
+@ActiveProfiles("test")
 class NewtonsGravityServiceTest {
     val universeConstants = UniverseConstants()
     @Autowired
