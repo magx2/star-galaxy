@@ -7,7 +7,7 @@ import java.util.*
 
 @Service
 internal class AngularTorqueServiceImpl : AngularTorqueService {
-    private val angularTorques: WeakHashMap<AngularApplicable, Double> = WeakHashMap()
+    private val angularTorques: MutableMap<AngularApplicable, Double> = HashMap()
 
     override fun get(obj: AngularApplicable): Double = angularTorques.getOrPut(obj, { 0.0 })
 
@@ -17,5 +17,9 @@ internal class AngularTorqueServiceImpl : AngularTorqueService {
 
     override fun inc(obj: AngularApplicable, value: Double) {
         angularTorques.merge(obj, value, { a, b -> a + b })
+    }
+
+    override fun clear() {
+        angularTorques.clear()
     }
 }
