@@ -1,7 +1,6 @@
 package star.galaxy.engine.physics.impl
 
 import org.springframework.stereotype.Service
-import star.galaxy.engine.UniverseConstants
 import star.galaxy.engine.algebra.cross
 import star.galaxy.engine.physics.SpaceEngineService
 import star.galaxy.engine.types.AngularApplicable
@@ -10,7 +9,7 @@ import star.galaxy.engine.types.WithForceGenerators
 import javax.vecmath.Vector2d
 
 @Service
-internal class SpaceEngineServiceImpl(private val universeConstants: UniverseConstants) : SpaceEngineService {
+internal class SpaceEngineServiceImpl : SpaceEngineService {
     override fun applyForceFromForceGenerators(objects: Set<WithForceGenerators>,
                                                velocityForces: Map<out ForceApplicable, Vector2d>,
                                                angularTorques: MutableMap<AngularApplicable, Double>) {
