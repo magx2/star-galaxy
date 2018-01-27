@@ -34,13 +34,13 @@ class NewtonsForceApplicatorTest {
         val position = Point2d(30.0, -60.0)
         val velocity = Vector2d(-2.0, 7.0)
         val obj = ObjectInSpace(mass, position.copy(), velocity.copy())
-        val Δt = 23.0
+        val Δt = 23
 
         forceService[obj].x = initialForce.x
         forceService[obj].y = initialForce.y
         val forceOnObj = initialForce.copy()
         forceOnObj.scale(obj.invertedMass())
-        forceOnObj.scale(Δt)
+        forceOnObj.scale(Δt.toDouble())
 
         val expectedVelocity = velocity.copy()
         expectedVelocity.add(forceOnObj)
@@ -88,13 +88,13 @@ class NewtonsForceApplicatorTest {
                 ForceApplicablesImpl(listOf(), v3.copy(), p3.copy(), m3, r3)
         )
         val obj = Galaxy(forceApplicables, Point(position), velocity.copy())
-        val Δt = 2.0
+        val Δt = 2
 
         forceService[obj].x = initialForce.x
         forceService[obj].y = initialForce.y
         val forceOnObj = initialForce.copy()
         forceOnObj.scale(obj.invertedMass())
-        forceOnObj.scale(Δt)
+        forceOnObj.scale(Δt.toDouble())
 
         val expectedVelocity = velocity.copy()
         val expectedV1 = v1.copy()

@@ -4,8 +4,8 @@ import star.galaxy.engine.metainformations.Second
 
 interface Clock {
     @Second
-    fun next(): Double
+    fun next(): Int
 
     @Second
-    fun time(): Double
+    fun time(): Long
 }

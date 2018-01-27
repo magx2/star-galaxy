@@ -17,19 +17,19 @@ class PhysicsEngine(private val gravityService: GravityService,
                     private val forceApplicator: ForceApplicator,
                     private val forceService: ForceService,
                     private val universe: Universe) : Engine {
-    override fun nextStep(@Second Δt: Double) {
+    override fun nextStep(@Second Δt: Int) {
         applyGravityMaster(universe.allForceApplicables(), Δt)
         forceService.clear()
     }
 
-    private fun applyGravityMaster(objs: List<ForceApplicable>, Δt: Double) {
+    private fun applyGravityMaster(objs: List<ForceApplicable>, Δt: Int) {
         applyGravity(objs, Δt)
         objs.stream()
                 .castTo(ForceApplicables::class.java)
                 .forEach { applyGravityMaster(it.children(), Δt) }
     }
 
-    private fun applyGravity(objs: List<ForceApplicable>, Δt: Double) {
+    private fun applyGravity(objs: List<ForceApplicable>, Δt: Int) {
         gravityService.applyGravity(objs)
         objs.forEach {
             when (it) {
@@ -39,11 +39,11 @@ class PhysicsEngine(private val gravityService: GravityService,
         }
     }
 
-    private fun applyAngularForces(forces: Map<AngularApplicable, Double>, @Second Δt: Double) {
+    private fun applyAngularForces(forces: Map<AngularApplicable, Double>, @Second Δt: Int) {
         forces.forEach { (k, v) -> applyAngularForces(k, v, Δt) }
     }
 
-    private fun applyAngularForces(obj: AngularApplicable, torque: Double, @Second Δt: Double) {
+    private fun applyAngularForces(obj: AngularApplicable, torque: Double, @Second Δt: Int) {
         obj.addAngularVelocity(torque * obj.invertedInertia() * Δt)
         obj.addOrientation(obj.angularVelocity() * Δt)
     }

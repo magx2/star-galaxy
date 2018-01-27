@@ -33,7 +33,7 @@ class PhysicsEngineTest {
     @MockBean
     lateinit var universe: Universe
 
-    val Δt: Double = 10.0
+    val Δt: Int = 10
 
     @Test
     fun `should apply gravity forces to all objects`() {

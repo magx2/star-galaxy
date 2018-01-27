@@ -8,7 +8,7 @@ import star.galaxy.engine.types.ForceApplicables
 
 @Service
 internal class NewtonsForceApplicator(private val forceService: ForceService) : ForceApplicator {
-    override fun apply(obj: ForceApplicables, Δt: Double) {
+    override fun apply(obj: ForceApplicables, Δt: Int) {
         val invertedMass = obj.invertedMass()
         val force = forceService[obj]
         val vx = force.x * invertedMass * Δt
@@ -30,7 +30,7 @@ internal class NewtonsForceApplicator(private val forceService: ForceService) : 
         }
     }
 
-    override fun apply(obj: ForceApplicable, Δt: Double) {
+    override fun apply(obj: ForceApplicable, Δt: Int) {
         val invertedMass = obj.invertedMass()
         val force = forceService[obj]
         obj.velocity().x += force.x * invertedMass * Δt

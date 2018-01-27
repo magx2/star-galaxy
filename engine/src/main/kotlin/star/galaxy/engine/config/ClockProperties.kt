@@ -9,5 +9,5 @@ import star.galaxy.engine.metainformations.Second
 class ClockProperties {
     val fps: Int = 60
     @Second
-    val timeInGame: Double = 1.0
+    val timeInGame: Int = 1
 }
