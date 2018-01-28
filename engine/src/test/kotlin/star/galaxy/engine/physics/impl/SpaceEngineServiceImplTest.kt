@@ -40,35 +40,53 @@ class SpaceEngineServiceImplTest {
 
         // given
         val initialVelocityForce = Vector2d(-4.0, 5.0)
-        val velocityForce = Vector2d(3.0, 7.0)
-        val obj = TestForceGenerator(velocityForce = velocityForce)
 
-        val element = TestWithForceGenerators(setOf(obj))
+        val velocityForce1 = Vector2d(3.0, 7.0)
+        val obj1 = TestForceGenerator(velocityForce = velocityForce1)
+
+        val velocityForce2 = Vector2d(9.0, 3.0)
+        val obj2 = TestForceGenerator(velocityForce = velocityForce2)
+
+        val velocityForce3 = Vector2d(2.0, 5.0)
+        val obj3 = TestForceGenerator(velocityForce = velocityForce3)
+
+        val element = TestWithForceGenerators(setOf(obj1, obj2, obj3))
         given(forceService[element]).willReturn(initialVelocityForce)
 
         // when
         service.apply(listOf(element))
 
         // then
-        assertThat(initialVelocityForce.x).isEqualTo(-1.0)
-        assertThat(initialVelocityForce.y).isEqualTo(12.0)
+        assertThat(initialVelocityForce.x).isEqualTo(10.0)
+        assertThat(initialVelocityForce.y).isEqualTo(20.0)
     }
 
     @Test
     fun `should apply torque`() {
 
         // given
-        val angularForce = Vector2d(-2.0, 3.0)
-        val vectorToParentCenterOfMass = Vector2d(5.0, -7.0)
-        val obj = TestForceGenerator(angularForce = angularForce,
-                vectorToParentCenterOfMass = vectorToParentCenterOfMass)
-        val element = TestWithForceGenerators(setOf(obj))
+        val angularForce1 = Vector2d(-2.0, 3.0)
+        val vectorToParentCenterOfMass1 = Vector2d(5.0, -7.0)
+        val obj1 = TestForceGenerator(angularForce = angularForce1,
+                vectorToParentCenterOfMass = vectorToParentCenterOfMass1)
+
+        val angularForce2 = Vector2d(-4.0, 6.0)
+        val vectorToParentCenterOfMass2 = Vector2d(4.0, -7.0)
+        val obj2 = TestForceGenerator(angularForce = angularForce2,
+                vectorToParentCenterOfMass = vectorToParentCenterOfMass2)
+
+        val angularForce3 = Vector2d(-1.0, 9.0)
+        val vectorToParentCenterOfMass3 = Vector2d(4.0, -6.0)
+        val obj3 = TestForceGenerator(angularForce = angularForce3,
+                vectorToParentCenterOfMass = vectorToParentCenterOfMass3)
+
+        val element = TestWithForceGenerators(setOf(obj1, obj2, obj3))
 
         // when
         service.apply(listOf(element))
 
         // then
-        verify(angularTorqueService).inc(element, 1.0)
+        verify(angularTorqueService).inc(element, 27.0)
     }
 
     private class TestWithForceGenerators(val forceGenerators: Set<ForceGenerator>) : WithForceGenerators {
