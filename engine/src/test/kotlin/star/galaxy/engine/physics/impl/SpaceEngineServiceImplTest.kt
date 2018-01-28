@@ -1,9 +1,12 @@
 package star.galaxy.engine.physics.impl
 
+import com.nhaarman.mockito_kotlin.whenever
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.verify
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.junit4.SpringRunner
@@ -27,6 +30,11 @@ class SpaceEngineServiceImplTest {
     @MockBean
     lateinit var angularTorqueService: AngularTorqueService
 
+    @Before
+    fun setUp() {
+        whenever(forceService[com.nhaarman.mockito_kotlin.any()]).thenReturn(Vector2d())
+    }
+
     @Test
     fun `should apply force to velocity`() {
 
@@ -44,6 +52,23 @@ class SpaceEngineServiceImplTest {
         // then
         assertThat(initialVelocityForce.x).isEqualTo(-1.0)
         assertThat(initialVelocityForce.y).isEqualTo(12.0)
+    }
+
+    @Test
+    fun `should apply torque`() {
+
+        // given
+        val angularForce = Vector2d(-2.0, 3.0)
+        val vectorToParentCenterOfMass = Vector2d(5.0, -7.0)
+        val obj = TestForceGenerator(angularForce = angularForce,
+                vectorToParentCenterOfMass = vectorToParentCenterOfMass)
+        val element = TestWithForceGenerators(setOf(obj))
+
+        // when
+        service.apply(listOf(element))
+
+        // then
+        verify(angularTorqueService).inc(element, 1.0)
     }
 
     private class TestWithForceGenerators(val forceGenerators: Set<ForceGenerator>) : WithForceGenerators {

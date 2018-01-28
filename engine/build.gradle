@@ -42,4 +42,5 @@ dependencies {
 	// mine
 	compile group: 'javax.vecmath', name: 'vecmath', version: '1.5.2'
 //	compile group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
+	testCompile group: 'com.nhaarman', name: 'mockito-kotlin-kt1.1', version: '1.5.0'
 }
