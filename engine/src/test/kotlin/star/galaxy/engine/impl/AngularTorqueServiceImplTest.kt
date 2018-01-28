@@ -4,14 +4,12 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
+import star.galaxy.engine.metainformations.Testing
 import star.galaxy.engine.types.AngularApplicable
 
 @RunWith(SpringRunner::class)
-@SpringBootTest
-@ActiveProfiles("test")
+@Testing
 class AngularTorqueServiceImplTest {
     @Autowired
     private lateinit var service: AngularTorqueServiceImpl

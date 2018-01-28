@@ -5,12 +5,11 @@ import org.junit.runner.RunWith
 import org.mockito.BDDMockito.given
 import org.mockito.BDDMockito.verify
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import star.galaxy.engine.ForceService
 import star.galaxy.engine.Universe
+import star.galaxy.engine.metainformations.Testing
 import star.galaxy.engine.physics.ForceApplicator
 import star.galaxy.engine.physics.GravityService
 import star.galaxy.engine.types.ForceApplicable
@@ -20,8 +19,7 @@ import javax.vecmath.Vector2d
 
 
 @RunWith(SpringRunner::class)
-@SpringBootTest
-@ActiveProfiles("test")
+@Testing
 class PhysicsEngineTest {
     @Autowired
     lateinit var physicsEngine: PhysicsEngine

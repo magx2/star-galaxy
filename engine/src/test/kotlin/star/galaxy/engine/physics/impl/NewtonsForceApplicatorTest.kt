@@ -4,8 +4,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import star.galaxy.engine.ForceService
 import star.galaxy.engine.algebra.copy
@@ -13,14 +11,14 @@ import star.galaxy.engine.entites.Galaxy
 import star.galaxy.engine.entites.ObjectInSpace
 import star.galaxy.engine.entites.Point
 import star.galaxy.engine.entities.ForceApplicablesImpl
+import star.galaxy.engine.metainformations.Testing
 import star.galaxy.engine.types.ForceApplicables
 import javax.vecmath.Point2d
 import javax.vecmath.Vector2d
 
 
 @RunWith(SpringRunner::class)
-@SpringBootTest
-@ActiveProfiles("test")
+@Testing
 class NewtonsForceApplicatorTest {
     @Autowired
     private lateinit var service: NewtonsForceApplicator

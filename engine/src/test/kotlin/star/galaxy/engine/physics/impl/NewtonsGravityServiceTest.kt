@@ -5,21 +5,19 @@ import org.assertj.core.api.Assertions.offset
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import star.galaxy.engine.ForceService
 import star.galaxy.engine.UniverseConstants
 import star.galaxy.engine.algebra.copy
 import star.galaxy.engine.algebra.createVector
 import star.galaxy.engine.entites.ObjectInSpace
+import star.galaxy.engine.metainformations.Testing
 import javax.vecmath.Point2d
 import javax.vecmath.Vector2d
 import kotlin.math.abs
 
 @RunWith(SpringRunner::class)
-@SpringBootTest
-@ActiveProfiles("test")
+@Testing
 class NewtonsGravityServiceTest {
     val universeConstants = UniverseConstants()
     @Autowired
