@@ -25,7 +25,7 @@ import javax.vecmath.Vector2d
 @Testing
 class PhysicsEngineTest {
     @Autowired
-    lateinit var physicsEngine: PhysicsEngine
+    private lateinit var physicsEngine: PhysicsEngine
 
     @MockBean
     lateinit var gravityService: GravityService
