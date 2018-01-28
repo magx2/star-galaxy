@@ -23,7 +23,7 @@ class PhysicsEngine(private val gravityService: GravityService,
                     private val universe: Universe) : Engine {
     override fun nextStep(@Second Δt: Int) {
         applyGravityMaster(universe.allForceApplicables(), Δt)
-        spaceEngineService.applyForceFromForceGenerators(universe.withForceGenerators())
+        spaceEngineService.apply(universe.withForceGenerators())
         clear()
     }
 

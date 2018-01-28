@@ -10,7 +10,7 @@ import star.galaxy.engine.types.WithForceGenerators
 @Service
 internal class SpaceEngineServiceImpl(private val forceService: ForceService,
                                       private val angularTorqueService: AngularTorqueService) : SpaceEngineService {
-    override fun applyForceFromForceGenerators(objects: Collection<WithForceGenerators>) {
+    override fun apply(objects: Collection<WithForceGenerators>) {
         objects.forEach {
             velocity(it)
             angular(it)
