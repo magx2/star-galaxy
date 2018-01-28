@@ -24,6 +24,7 @@ class PhysicsEngine(private val gravityService: GravityService,
     override fun nextStep(@Second Δt: Int) {
         applyGravityMaster(universe.allForceApplicables(), Δt)
         spaceEngineService.apply(universe.withForceGenerators())
+        applyAngularForces(universe.angularApplicable(), Δt)
         clear()
     }
 
@@ -44,12 +45,12 @@ class PhysicsEngine(private val gravityService: GravityService,
         }
     }
 
-    private fun applyAngularForces(forces: Map<AngularApplicable, Double>, @Second Δt: Int) {
-        forces.forEach { (k, v) -> applyAngularForces(k, v, Δt) }
+    private fun applyAngularForces(angularApplicables: Collection<AngularApplicable>, @Second Δt: Int) {
+        angularApplicables.forEach { applyAngularForces(it, Δt) }
     }
 
-    private fun applyAngularForces(obj: AngularApplicable, torque: Double, @Second Δt: Int) {
-        obj.addAngularVelocity(torque * obj.invertedInertia() * Δt)
+    private fun applyAngularForces(obj: AngularApplicable, @Second Δt: Int) {
+        obj.addAngularVelocity(angularTorqueService[obj] * obj.invertedInertia() * Δt)
         obj.addOrientation(obj.angularVelocity() * Δt)
     }
 
