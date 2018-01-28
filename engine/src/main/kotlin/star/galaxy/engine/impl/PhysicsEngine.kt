@@ -15,12 +15,12 @@ import star.galaxy.engine.types.ForceApplicables
 import star.galaxy.engine.utils.castTo
 
 @Service
-class PhysicsEngine(private val gravityService: GravityService,
-                    private val forceApplicator: ForceApplicator,
-                    private val forceService: ForceService,
-                    private val spaceEngineService: SpaceEngineService,
-                    private val angularTorqueService: AngularTorqueService,
-                    private val universe: Universe) : Engine {
+internal class PhysicsEngine(private val gravityService: GravityService,
+                             private val forceApplicator: ForceApplicator,
+                             private val forceService: ForceService,
+                             private val spaceEngineService: SpaceEngineService,
+                             private val angularTorqueService: AngularTorqueService,
+                             private val universe: Universe) : Engine {
     override fun nextStep(@Second Δt: Int) {
         applyGravityMaster(universe.allForceApplicables(), Δt)
         spaceEngineService.apply(universe.withForceGenerators())
