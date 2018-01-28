@@ -12,8 +12,11 @@ import star.galaxy.engine.Universe
 import star.galaxy.engine.metainformations.Testing
 import star.galaxy.engine.physics.ForceApplicator
 import star.galaxy.engine.physics.GravityService
+import star.galaxy.engine.physics.SpaceEngineService
 import star.galaxy.engine.types.ForceApplicable
 import star.galaxy.engine.types.ForceApplicables
+import star.galaxy.engine.types.ForceGenerator
+import star.galaxy.engine.types.WithForceGenerators
 import javax.vecmath.Point2d
 import javax.vecmath.Vector2d
 
@@ -32,6 +35,8 @@ class PhysicsEngineTest {
     lateinit var forceService: ForceService
     @MockBean
     lateinit var universe: Universe
+    @MockBean
+    lateinit var spaceEngineService: SpaceEngineService
 
     val Δt: Int = 10
 
@@ -55,6 +60,20 @@ class PhysicsEngineTest {
         verifyRoot(root2)
         verifyRoot(root3)
         verify(forceService).clear()
+    }
+
+    @Test
+    fun `should invoke spaceEngineService with all withForceGenerators`() {
+
+        // given
+        val withForceGenerators = listOf(TestWithForceGenerators(), TestWithForceGenerators(), TestWithForceGenerators())
+        given(universe.withForceGenerators()).willReturn(withForceGenerators)
+
+        // when
+        physicsEngine.nextStep(Δt)
+
+        // then
+        verify(spaceEngineService).apply(withForceGenerators)
     }
 
     private fun verifyRoot(root: ForceApplicables) {
@@ -125,6 +144,32 @@ class PhysicsEngineTest {
         override fun invertedMass() = 1.0
 
         override fun radian() = 1.0
+    }
+
+    private class TestWithForceGenerators : WithForceGenerators {
+        override fun forceGenerators(): Set<ForceGenerator> = setOf()
+
+        override fun velocity() = Vector2d()
+
+        override fun position() = Point2d()
+
+        override fun mass() = 1.0
+
+        override fun invertedMass() = 1.0
+
+        override fun angularVelocity() = 1.0
+
+        override fun addAngularVelocity(angularVelocity: Double) {
+        }
+
+        override fun orientation() = 1.0
+
+        override fun addOrientation(orientation: Double) {
+        }
+
+        override fun inertia() = 1.0
+
+        override fun invertedInertia() = 1.0
     }
 }
 
