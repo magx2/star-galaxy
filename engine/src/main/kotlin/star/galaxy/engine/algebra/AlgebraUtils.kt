@@ -1,5 +1,6 @@
 package star.galaxy.engine.algebra
 
+import star.galaxy.engine.metainformations.Direction
 import star.galaxy.engine.metainformations.Radians
 import star.galaxy.engine.types.WithPosition
 import javax.vecmath.Point2d
@@ -36,3 +37,16 @@ fun Vector2d.rotateVector(@Radians angle: Double): Vector2d {
 }
 
 infix fun Vector2d.cross(that: Vector2d) = this.x * that.y - this.y * that.x
+
+fun perpendicular(vector: Vector2d, direction: Direction): Vector2d {
+    val perpendicular = vector.copy()
+    val signum = when (direction) {
+        Direction.CLOCKWISE -> -1.0
+        Direction.COUNTER_CLOCKWISE -> 1.0
+    }
+    val x = perpendicular.y * -signum
+    val y = perpendicular.x * signum
+    perpendicular.x = x
+    perpendicular.y = y
+    return perpendicular
+}
