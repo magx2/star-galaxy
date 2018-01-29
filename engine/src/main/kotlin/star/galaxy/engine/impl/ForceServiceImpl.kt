@@ -2,6 +2,7 @@ package star.galaxy.engine.impl
 
 import org.springframework.stereotype.Service
 import star.galaxy.engine.ForceService
+import star.galaxy.engine.algebra.clear
 import star.galaxy.engine.types.ForceApplicable
 import java.util.*
 import javax.vecmath.Vector2d
@@ -15,9 +16,6 @@ internal class ForceServiceImpl : ForceService {
     override fun clear() {
         forces.values
                 .stream()
-                .forEach {
-                    it.x = 0.0
-                    it.y = 0.0
-                }
+                .forEach { it.clear() }
     }
 }
