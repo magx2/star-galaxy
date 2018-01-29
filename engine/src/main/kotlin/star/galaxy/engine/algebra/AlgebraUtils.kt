@@ -2,6 +2,7 @@ package star.galaxy.engine.algebra
 
 import star.galaxy.engine.metainformations.Direction
 import star.galaxy.engine.metainformations.Radians
+import star.galaxy.engine.metainformations.findDirection
 import star.galaxy.engine.types.WithPosition
 import javax.vecmath.Point2d
 import javax.vecmath.Vector2d
@@ -50,3 +51,5 @@ fun perpendicular(vector: Vector2d, direction: Direction): Vector2d {
     perpendicular.y = y
     return perpendicular
 }
+
+fun perpendicular(vector: Vector2d, direction: Double) = perpendicular(vector, findDirection(direction))
